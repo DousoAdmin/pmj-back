@@ -16,7 +16,7 @@ DB_USER=root
 DB_PASSWORD=
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=prueba
+DB_NAME=
 DATABASE_URL=${DB_ENGINE}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 
 # =======================
