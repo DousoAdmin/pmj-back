@@ -4,17 +4,17 @@ from Core import security
 
 def register_user(user: Schemas.user_schema.UserCreate, db: Session):
     db_user = db.query(Models.user_model.User).filter(
-        Models.user_model.User.username == user.username
+        Models.user_model.User.USER_username == user.USER_username
     ).first()
     if db_user:
         return None
 
-    hashed_password = security.hash_password(user.password)
+    hashed_password = security.hash_password(user.USER_password)
     new_user = Models.user_model.User(
-        username=user.username,
-        email=user.email,
+        username=user.USER_username,
+        email=user.USER_email,
         password=hashed_password,
-        full_name=user.full_name
+        full_name=user.USER_full_name
     )
     db.add(new_user)
     db.commit()
