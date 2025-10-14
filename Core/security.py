@@ -9,7 +9,7 @@ from Config.database import get_db
 from Models.user_model import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 def hash_password(password: str):
     return pwd_context.hash(password)
@@ -37,7 +37,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except JWTError:
         raise credentials_exception
     
-    user = db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(User.USER_username == username).first()
     if user is None:
         raise credentials_exception
     return user

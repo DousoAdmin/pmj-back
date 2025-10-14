@@ -29,9 +29,9 @@ def register_user(user: Schemas.user_schema.UserCreate, db: Session):
 
 def authenticate_user(username: str, password: str, db: Session):
     user = db.query(Models.user_model.User).filter(
-        Models.user_model.User.username == username
+        Models.user_model.User.USER_username == username
     ).first()
-    if not user or not security.verify_password(password, user.password):
+    if not user or not security.verify_password(password, user.USER_password):
         return None
     return user
 
