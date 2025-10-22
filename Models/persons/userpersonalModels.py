@@ -14,8 +14,9 @@ class UserPersonas(Base):
     # Llave
     USPS_FK_create = Column(Integer,nullable=True )
     USPS_FK_update = Column(Integer,nullable=True )
-    USPS_FK_user = Column(Integer)
+    USPS_FK_user = Column(Integer, ForeignKey("users.USER_PK"))
     USPS_FK_person = Column(Integer, ForeignKey("persons.PRSN_PK"))
 
     # Relaciones
-    person = relationship("Person", back_populates="userspersons")
+    person = relationship("Persons", back_populates="userspersons")
+    user = relationship("User", back_populates="userspersons")
