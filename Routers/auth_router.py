@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from Schemas import user_schema
 from Config.database import get_db
@@ -14,8 +15,9 @@ def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 @router.post("/login", response_model=user_schema.TokenResponse)
-def login(user: user_schema.UserLogin, db: Session = Depends(get_db)):
-    auth_user = auth_service.authenticate_user(user.USER_username, user.USER_password, db)
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    # OAuth2PasswordRequestForm usa 'username' y 'password' en lugar de 'USER_username' y 'USER_password'
+    auth_user = auth_service.authenticate_user(form_data.username, form_data.password, db)
     if not auth_user:
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
     

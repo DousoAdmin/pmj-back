@@ -3,9 +3,14 @@ from Config.database import Base, engine
 import importlib
 import pkgutil
 
+# Importar TODOS los modelos ANTES de crear las tablas
+# Esto es necesario para que SQLAlchemy pueda resolver las relaciones
+from Models.users import userModel, statesuserModel, logsModel, rolesModel, permissionsModel, rolesPermissionModel, usersrolesorganicionesModel
+from Models.persons import personasModels, userpersonalModels, beneficiarysModels, disabilitysModels, documentsModels, documentstatesModels, ethnicityModels, gendersModels, personsdocumentModels, programsModels, sexualidentitysModels, statepersondocumentModels
+
 app = FastAPI(title="Plataforma Modular con FastAPI")
 
-# Crear tablas si no existen
+# Crear tablas si no existen (después de importar todos los modelos)
 Base.metadata.create_all(bind=engine)
 
 # Importar TODOS los routers dentro de app.Routers (con mayúscula)

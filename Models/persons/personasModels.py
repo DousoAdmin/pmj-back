@@ -29,7 +29,7 @@ class Persons(Base):
 
 
     #Relaciones de uno a muchos 
-    userspersons = relationship("UsersPersons", back_populates="person")
+    userspersons = relationship("UserPersonas", back_populates="person")
     beneficiarys = relationship("Beneficiary", back_populates="person")
     persondocument = relationship("PersonsDocument", back_populates="person")
 

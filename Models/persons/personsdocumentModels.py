@@ -11,9 +11,9 @@ class PersonsDocument(Base):
     PRDC_location = Column(String(255), index=True, nullable=False)
 
     # Conexion
-    PRDC_FK_state = Column(Integer, ForeignKey("state.STPD_PK"))
-    PRDC_FK_person = Column(Integer, ForeignKey("persons.PRSN.PK"))
-    PRDC_FK_document = Column(Integer, ForeignKey("documnet.DCMT_PK"))
+    PRDC_FK_state = Column(Integer, ForeignKey("statepersondoc.STPD_PK"))
+    PRDC_FK_person = Column(Integer, ForeignKey("persons.PRSN_PK"))
+    PRDC_FK_document = Column(Integer, ForeignKey("documents.DCMT_PK"))
 
     #Relaciones de ForeingKey
     state = relationship("StatePersonDoc", back_populates="persondocument")

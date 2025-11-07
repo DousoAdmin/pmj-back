@@ -18,7 +18,7 @@ class User(Base):
     USER_address_ip = Column(String(100), nullable=True)
 
     # ForeingKey
-    USER_FK_state_user = Column(Integer,ForeignKey("stateuser.SSTS_PK"))
+    USER_FK_state_user = Column(Integer,ForeignKey("stateuser.STTS_PK"))
 
     #Relaciones
     state_user = relationship("StatesUser", back_populates="user")

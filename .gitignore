@@ -6,3 +6,5 @@ Config/__pycache__/
 __pycache__/
 
 Services/
+
+Models/users/usersrolesorganicionesModel.py

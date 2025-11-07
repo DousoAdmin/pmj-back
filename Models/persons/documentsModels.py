@@ -11,7 +11,7 @@ class Documents(Base):
     DCMT_description = Column(String(255), index=True)
 
     # ForeingKey
-    DCMT_FK_state = Column(Integer, ForeignKey("ducumentstate.DCST_PK"))
+    DCMT_FK_state = Column(Integer, ForeignKey("documentstate.DCST_PK"))
 
     # Relaciones
     persondocument = relationship("PersonsDocument", back_populates="document")

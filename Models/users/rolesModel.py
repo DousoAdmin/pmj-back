@@ -5,8 +5,8 @@ from Config.database import Base
 class Roles(Base):
     __tablename__ = "roles"
 
-    ROLA_PK = Column(Integer, primary_key=True, autoincrement=True)
-    ROLA_name = Column(String(45), nullable=False, index=True)
+    ROLE_PK = Column(Integer, primary_key=True, autoincrement=True)
+    ROLE_name = Column(String(45), nullable=False, index=True)
     ROLE_description = Column(String(255), nullable=False, index=True)
     ROLE_date_create = Column(Date, index=True)
     ROLE_date_update = Column(Date, index=True)
