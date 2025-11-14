@@ -24,4 +24,4 @@ class User(Base):
     state_user = relationship("StatesUser", back_populates="user")
     userspersons = relationship("UserPersonas", back_populates="user")
     logs = relationship("Logs", back_populates="user")
-    usersrolesorgani = relationship("UserRolesOrganiciones", back_populates="user")
+    #usersrolesorgani = relationship("UserRolesOrganiciones", back_populates="user")

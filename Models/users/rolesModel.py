@@ -17,5 +17,5 @@ class Roles(Base):
     ROLE_FK_user_update = Column(Integer, ForeignKey(""))
 
     #Relaciones
-    usersrolesorgani = relationship("UserRolesOrganiciones", back_populates="roles")
+    #usersrolesorgani = relationship("UserRolesOrganiciones", back_populates="roles")
     rolespermission = relationship("RolesPermissions", back_populates="roles")
