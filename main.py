@@ -6,7 +6,8 @@ import pkgutil
 # Importar TODOS los modelos ANTES de crear las tablas
 # Esto es necesario para que SQLAlchemy pueda resolver las relaciones
 from Models.users import userModel, statesuserModel, logsModel, rolesModel, permissionsModel, rolesPermissionModel
-from Models.persons import personasModels, userpersonalModels, beneficiarysModels, disabilitysModels, documentsModels, documentstatesModels, ethnicityModels, gendersModels, personsdocumentModels, programsModels, sexualidentitysModels, statepersondocumentModels
+from Models.persons import personasModel, userpersonalModel, beneficiarysModel, disabilitysModel, documentsModel, documentstatesModel, ethnicityModel, gendersModel, personsdocumentModel, programsModel, sexualidentitysModel, statepersondocumentModel
+from Models.Organizations import approachesModel, organizaionStatusesModel, organizationapproachesModel, organizationDocumentModel, organizationDocumentTypeModel, organizationObservationsModel, organizationsModel, organizationTypeModel
 
 app = FastAPI(title="Plataforma Modular con FastAPI")
 
