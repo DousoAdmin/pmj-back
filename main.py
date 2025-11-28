@@ -7,7 +7,7 @@ from Models.users import (
     permissionsModel, rolesPermissionModel,usersRolesOrganizationsModel
 )
 from Models.persons import (
-    personasModel, userpersonalModel, beneficiarysModel, disabilitysModel,
+    personsModel, userpersonalModel, beneficiarysModel, disabilitysModel,
     documentsModel, documentstatesModel, ethnicityModel, gendersModel,
     personsdocumentModel, programsModel, sexualidentitysModel,
     statepersondocumentModel
