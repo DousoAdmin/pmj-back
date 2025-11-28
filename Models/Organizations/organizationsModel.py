@@ -12,7 +12,7 @@ class Organizations(Base):
     ORGZ_nit = Column(String(100), index=True)
     ORGZ_creation_date = Column(String(100), index=True)
 
-    ORGZ_FK_statu = Column(Integer, ForeignKey('organizationstatuses.ORST.PK'))
+    ORGZ_FK_statu = Column(Integer, ForeignKey('organizationstatuses.ORST_PK'))
     ORGZ_FK_type = Column(Integer, ForeignKey('organizationtype.ORTP_PK'))
 
     status = relationship('OrganizationStatuses', back_populates="organizations")

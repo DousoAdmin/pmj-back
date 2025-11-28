@@ -3,7 +3,7 @@ from Config.database import Base
 from sqlalchemy.orm import relationship
 
 class OrganizationTypes(Base):
-    __tablenmame__ = "organizationtype"
+    __tablename__ = "organizationtype"
 
     ORTP_PK = Column(Integer, primary_key=True, index=True)
 
