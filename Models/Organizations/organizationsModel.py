@@ -16,7 +16,7 @@ class Organizations(Base):
     ORGZ_FK_type = Column(Integer, ForeignKey('organizationtype.ORTP_PK'))
 
     status = relationship('OrganizationStatuses', back_populates="organizations")
-    type =  relationship('OrganizationsTypes', back_populates="organizations")
-    usersrolesorganizations = relationship('UserRolesOrganiciones', back_populates="organizations")
+    type =  relationship('OrganizationTypes', back_populates="organizations")
+    usersrolesorganizations = relationship('UsersRolesOrganizations', back_populates="organizations")
     organizationapproaches = relationship('OrganizationsApproaches', back_populates="organizations")
     organizationdocumentS = relationship('OrganizationDocument', back_populates="organizations")

@@ -3,8 +3,8 @@ from sqlalchemy.orm import relationship
 from Config.database import Base
 
 
-class UserRolesOrganiciones(Base):
-    __tablename__ = "usersrolesorganiciones"
+class UsersRolesOrganizations(Base):
+    __tablename__ = "usersrolesorganizations"
 
     USRL_PK = Column(Integer, primary_key=True, autoincrement=True, index=True)
     USRL_date_create = Column(Date)

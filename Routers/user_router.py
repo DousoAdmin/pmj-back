@@ -5,8 +5,8 @@ from Schemas.user_schema import UserResponse,UserOut
 from Services.user_service import get_all_users
 from Core.security import get_current_user
 
-router = APIRouter()
 
+router = APIRouter(prefix="/users", tags=["users"])
 @router.get("/me", response_model=UserResponse)
 def get_my_profile(current_user: UserResponse = Depends(get_current_user)):
     return current_user
