@@ -13,8 +13,8 @@ class Roles(Base):
     ROLE_state = Column(Integer, index=True, nullable=False)
 
     #ForeingKey
-    ROLE_FK_user_create = Column(Integer, ForeignKey(""))
-    ROLE_FK_user_update = Column(Integer, ForeignKey(""))
+    ROLE_FK_user_create = Column(Integer, ForeignKey("users.USER_PK"), nullable=True)
+    ROLE_FK_user_update = Column(Integer, ForeignKey("users.USER_PK"), nullable=True)
 
     #Relaciones
     usersrolesorgani = relationship("UsersRolesOrganizations", back_populates="roles")
