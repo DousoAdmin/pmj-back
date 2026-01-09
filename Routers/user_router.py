@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from Services.userServices import user_service
 from Config.database import get_db
-from Schemas.user_schema import UserResponse,UserOut
+from Schemas.user_schema import UserCreate, UserResponse,UserOut
 from Services.user_service import get_all_users
 from Core.security import get_current_user
 
@@ -21,3 +22,10 @@ def admin_route(current_user: UserResponse = Depends(get_current_user)):
 def list_users(db: Session = Depends(get_db)):
     users = get_all_users(db)
     return users
+
+
+
+
+
+
+
