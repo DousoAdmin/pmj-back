@@ -13,7 +13,7 @@ from Models.persons import (
     statepersondocumentModel
 )
 from Models.organizations import (
-    approachesModel, organizaionStatusesModel, organizationapproachesModel,
+    approachesModel, organizationStatusesModel, organizationapproachesModel,
     organizationDocumentModel, organizationDocumentTypeModel,
     organizationObservationsModel, organizationsModel, organizationTypeModel
 )
