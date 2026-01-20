@@ -1,8 +1,10 @@
-import os
+from pathlib import Path
 import sys
 
-# Ensure project root is on sys.path so absolute imports like `Models.*` work
-sys.path.insert(0, os.path.dirname(__file__))
+# Asegura que la raíz del proyecto esté en PYTHONPATH (robusto en Azure)
+ROOT = Path(__file__).resolve().parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from fastapi import FastAPI
 from Config.database import Base, engine
