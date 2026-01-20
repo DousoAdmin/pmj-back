@@ -1,18 +1,18 @@
 from fastapi import FastAPI
-from Config.database import Base, engine
+from .Config.database import Base, engine
 
 # 1) Importa TODOS los modelos (para que SQLAlchemy resuelva relaciones)
-from Models.users import (
+from .Models.users import (
     userModel, statesuserModel, logsModel, rolesModel,
     permissionsModel, rolesPermissionModel,usersRolesOrganizationsModel
 )
-from Models.persons import (
+from .Models.persons import (
     personsModel, userpersonalModel, beneficiarysModel, disabilitysModel,
     documentsModel, documentstatesModel, ethnicityModel, gendersModel,
     personsdocumentModel, programsModel, sexualidentitysModel,
     statepersondocumentModel
 )
-from Models.organizations import (
+from .Models.organizations import (
     approachesModel, organizationStatusesModel, organizationapproachesModel,
     organizationDocumentModel, organizationDocumentTypeModel,
     organizationObservationsModel, organizationsModel, organizationTypeModel
