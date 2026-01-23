@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from Models.organizations.organizationsModel import Organizations
+from Models.Organizations.organizationsModel import Organizations
 from Schemas.organizationSchema.organization_Shema import OrganizationCreate, OrganizationUpdate
 
 

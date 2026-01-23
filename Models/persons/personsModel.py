@@ -13,6 +13,8 @@ class Persons(Base):
     PRSN_brithday = Column(Date, nullable=False)
     PRSN_identification = Column(String(45), index=True, unique=True, nullable=False)
     PRSN_location = Column(String(255), index=tuple, nullable=False)
+    # PRSN_state se agregará cuando se cree la migración de base de datos
+    # PRSN_state = Column(Integer, default=1, nullable=True, index=True)  # 1 = activo, 0 = inactivo
 
     # ForeingKey
     PRSN_FK_ethnicity = Column(Integer, ForeignKey("ethnicity.ETNC_PK"))
