@@ -20,19 +20,19 @@ from Models.persons import (
     personsdocumentModel, programsModel, sexualidentitysModel,
     statepersondocumentModel
 )
-#from Models.organizations import (
-#   approachesModel, organizationStatusesModel, organizationapproachesModel,
-#    organizationDocumentModel, organizationDocumentTypeModel,
-#   organizationObservationsModel, organizationsModel, organizationTypeModel
-#)
-from Models.organizations import approachesModel
-from Models.organizations import organizationStatusesModel
-from Models.organizations import organizationapproachesModel
-from Models.organizations import organizationDocumentModel
-from Models.organizations import organizationDocumentTypeModel
-from Models.organizations import organizationObservationsModel
-from Models.organizations import organizationsModel
-from Models.organizations import organizationTypeModel
+from Models.organizations import (
+   approachesModel, organizationStatusesModel, organizationapproachesModel,
+    organizationDocumentModel, organizationDocumentTypeModel,
+   organizationObservationsModel, organizationsModel, organizationTypeModel
+)
+#from Models.organizations import approachesModel
+#from Models.organizations import organizationStatusesModel
+#from Models.organizations import organizationapproachesModel
+#from Models.organizations import organizationDocumentModel
+#from Models.organizations import organizationDocumentTypeModel
+#from Models.organizations import organizationObservationsModel
+#from Models.organizations import organizationsModel
+#from Models.organizations import organizationTypeModel
 
 # 2) Crea tablas
 Base.metadata.create_all(bind=engine)
