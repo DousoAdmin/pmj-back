@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Models.organizations.organizationStatusesModel import OrganizationStatuses
+from Models.Organizations.organizationStatusesModel import OrganizationStatuses
 from Schemas.organizationSchema.organization_status_schema import (
     OrganizationStatusCreate,
     OrganizationStatusUpdate
