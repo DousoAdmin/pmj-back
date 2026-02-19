@@ -1,2 +1,16 @@
+# Raíz
 .env
-__pycache__
+.env.*
+
+# Ignora env reales
+env/*.env
+!env/dev.env
+!env/*.example
+dev.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
