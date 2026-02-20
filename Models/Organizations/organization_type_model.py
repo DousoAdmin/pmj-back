@@ -12,3 +12,4 @@ class OrganizationTypes(Base):
     ORTP_date_create = Column(Date)
 
     organizations = relationship('Organizations', back_populates="type")
+    

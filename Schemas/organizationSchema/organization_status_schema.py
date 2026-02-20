@@ -19,7 +19,6 @@ class OrganizationStatusResponse(BaseModel):
     ORST_name: str
     ORST_description: str
     ORST_date_create: date = None
-
     class Config:
         orm_mode = True
 
@@ -32,3 +31,8 @@ class OrganizationStatusOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: OrganizationStatusResponse

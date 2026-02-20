@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from Config.database import get_db
 from Core.security import get_current_user
-from Schemas.organizationSchema.organization_Shema import OrganizationCreate, OrganizationResponse, OrganizationUpdate, OrganizationOut
+from Schemas.organizationSchema.organization_shema import OrganizationCreate, OrganizationResponse, OrganizationUpdate, OrganizationOut
 from Services.OrganizationServices import organization_service
 
 from Config.database import get_db
-from Schemas.organizationSchema.organization_Shema import (
+from Schemas.organizationSchema.organization_shema import (
     OrganizationCreate,
     OrganizationUpdate,
     OrganizationOut

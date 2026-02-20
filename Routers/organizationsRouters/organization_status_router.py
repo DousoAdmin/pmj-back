@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from Config.database import get_db
 from Core.security import get_current_user
-from Schemas.organizationSchema.organization_Shema import OrganizationResponse
 from Schemas.organizationSchema.organization_status_schema import (
     OrganizationStatusCreate,
+    OrganizationStatusResponse,
     OrganizationStatusUpdate,
     OrganizationStatusOut
 )
@@ -29,7 +29,7 @@ def list_organization_statuses(db: Session = Depends(get_db)):
 def get_organization_status(
     status_id: int,
     db: Session = Depends(get_db),
-    current_user: OrganizationResponse = Depends(get_current_user)
+    current_user: OrganizationStatusResponse = Depends(get_current_user)
 ):
     status = organization_status_service.get_organization_status(db, status_id)
     if not status:
@@ -44,7 +44,7 @@ def get_organization_status(
 def create_organization_status(
     data: OrganizationStatusCreate,
     db: Session = Depends(get_db),
-    current_user: OrganizationResponse = Depends(get_current_user)
+    current_user: OrganizationStatusResponse = Depends(get_current_user)
 ):
     return organization_status_service.create_organization_status(db, data)
 
@@ -57,7 +57,7 @@ def update_organization_status(
     status_id: int,
     data: OrganizationStatusUpdate,
     db: Session = Depends(get_db),
-    current_user: OrganizationResponse = Depends(get_current_user)
+    current_user: OrganizationStatusResponse = Depends(get_current_user)
 ):
     status = organization_status_service.update_organization_status(db, status_id, data)
     if not status:
@@ -72,7 +72,7 @@ def update_organization_status(
 def delete_organization_status(
     status_id: int,
     db: Session = Depends(get_db),
-    current_user: OrganizationResponse = Depends(get_current_user)
+    current_user: OrganizationStatusResponse = Depends(get_current_user)
 ):
     status = organization_status_service.delete_organization_status(db, status_id)
     if not status:

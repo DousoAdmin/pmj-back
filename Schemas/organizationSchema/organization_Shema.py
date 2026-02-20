@@ -8,11 +8,13 @@ class OrganizationCreate(BaseModel):
     ORGZ_FK_status : int
     ORGZ_FK_type : int
 
+
 class OrganizationResponse(BaseModel):
     ORGZ_PK: int
     ORGZ_name: str
     class Config:
         orm_mode = True 
+
 
 #Update
 class OrganizationUpdate(BaseModel):
@@ -23,8 +25,10 @@ class OrganizationUpdate(BaseModel):
     ORGZ_FK_status : int 
     ORGZ_FK_type : int 
 
+
 class OrganizationOut(BaseModel):
     ORGZ_PK: int
+
 
 class TokenResponse(BaseModel):
     access_token: str

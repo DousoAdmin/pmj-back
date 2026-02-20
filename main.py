@@ -20,11 +20,10 @@ from Models.persons import (
     personsdocumentModel, programsModel, sexualidentitysModel,
     statepersondocumentModel
 )
-#from Models.organizations import (
-#   approachesModel, organizationStatusesModel, organizationapproachesModel,
-#    organizationDocumentModel, organizationDocumentTypeModel,
-#   organizationObservationsModel, organizationsModel, organizationTypeModel
-#)
+from Models.organizations import (
+  approaches_model,organization_approaches_model,organization_document_model,organization_document_type_model,
+  organization_observations_model,organization_statuses_model,organization_type_model,organizations_model
+)
 #from Models.organizations import approachesModel
 #from Models.organizations import organizationStatusesModel
 #from Models.organizations import organizationapproachesModel
