@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from Models.Organizations.approachesModel import Approaches
+from Models.organizations.approaches_model import Approaches
 from typing import Optional
 
 def get_all_approaches(db: Session):

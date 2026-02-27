@@ -7,7 +7,7 @@ from Schemas.organizationSchema.organization_aproaches_shema import (
     OrganizationAproachesCreate,
     OrganizationAproachesResponse
 )
-from Services.OrganizationServices.organization_aproaches_services import (
+from Services.organizationServices.organization_aproaches_services import (
     create_organization_approach,
     get_organization_approaches,
     get_organization_approach_by_id,

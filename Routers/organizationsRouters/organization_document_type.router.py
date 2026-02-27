@@ -6,7 +6,7 @@ from Schemas.organizationSchema.organization_document_type_shema import (
     OrganizationDocumentTypeUpdate, 
     OrganizationDocumentTypeRespose
 )
-from Services.OrganizationServices.organization_document_type_service import (
+from Services.organizationServices.organization_document_type_service import (
     create_document_type,
     get_document_types,
     get_document_type_by_id,

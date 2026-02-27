@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from Config.database import get_db
 from Schemas.organizationSchema.organization_document_type_schema import OrganizationDocumentTypeCreate, OrganizationDocumentTypeUpdate, OrganizationDocumentTypeResponse
 from Schemas.user_schema import UserResponse
-from Services.OrganizationServices import organization_document_type_service
+from Services.organizationServices import organization_document_type_service
 from Core.security import get_current_user
 from typing import Optional
 

@@ -7,7 +7,7 @@ from Schemas.organizationSchema.organization_observations_shema import (
     OrganizationObservationOut,
     OrganizationObservationResponse
 )
-from Services.OrganizationServices.organization_observations_service import (
+from Services.organizationServices.organization_observations_service import (
     create_observation,
     get_observations,
     get_observation_by_id,

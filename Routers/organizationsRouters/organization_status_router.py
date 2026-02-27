@@ -8,7 +8,7 @@ from Schemas.organizationSchema.organization_status_schema import (
     OrganizationStatusUpdate,
     OrganizationStatusOut
 )
-from Services.OrganizationServices import organization_status_service
+from Services.organizationServices import organization_status_service
 
 router = APIRouter(prefix="/organization-statuses", tags=["organization-statuses"])
 

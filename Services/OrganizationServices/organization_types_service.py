@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from Models.Organizations.organizationTypeModel import OrganizationTypes
+from Models.organizations.organization_type_model import OrganizationTypes
 from typing import Optional
 
 def get_all_organization_types(db: Session):

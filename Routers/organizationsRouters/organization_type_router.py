@@ -6,7 +6,7 @@ from Schemas.organizationSchema.organization_type_shema import (
     OrganizationTypeUpdate,
     OrganizationTypeResponse
 )
-from Services.OrganizationServices.organization_type_service import (
+from Services.organizationServices.organization_type_service import (
     create_organization_type,
     get_organization_types,
     get_organization_type_by_id,
