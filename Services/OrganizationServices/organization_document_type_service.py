@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from Models.Organizations.organizationDocumentTypeModel import OrganizationDocumentType
+from Models.organizations.organizationDocumentTypeModel import OrganizationDocumentType
 from typing import Optional
 
 def get_all_organization_document_types(db: Session):

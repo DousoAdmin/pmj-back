@@ -14,7 +14,17 @@ class Settings:
     APP_PORT: int = int(os.getenv("APP_PORT", 8000))
 
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL")
+    DB_ENGINE: str = os.getenv("DB_ENGINE", "mysql")
+    DB_HOST: str = os.getenv("DB_HOST", "localhost")
+    DB_PORT: str = os.getenv("DB_PORT", "3306")
+    DB_DATABASE: str = os.getenv("DB_DATABASE", "test")
+    DB_USERNAME: str = os.getenv("DB_USERNAME", "root")
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "")
+    
+    # Construir DATABASE_URL para MySQL
+    @property
+    def DATABASE_URL(self) -> str:
+        return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_DATABASE}"
 
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY")

@@ -20,7 +20,7 @@ from Models.persons import (
     personsdocumentModel, programsModel, sexualidentitysModel,
     statepersondocumentModel
 )
-from Models.Organizations import (
+from Models.organizations import (
    approachesModel, organizationStatusesModel, organizationapproachesModel,
     organizationDocumentModel, organizationDocumentTypeModel,
    organizationObservationsModel, organizationsModel, organizationTypeModel
