@@ -5,6 +5,8 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+ENV PYTHONPATH=/app
+
 # deps del sistema (opcional, pero común)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
