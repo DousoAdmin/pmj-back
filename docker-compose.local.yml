@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file:
-      - ./.env
-    container_name: pmj-back-dev
+      - ./env/.env.local
+    container_name: pmj-back-local
     ports:
       - "8000:8000"
     volumes:

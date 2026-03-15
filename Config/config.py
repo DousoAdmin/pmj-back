@@ -1,15 +1,16 @@
 import os
 from dotenv import load_dotenv
 
-# Carga las variables desde el archivo .env
-load_dotenv()
+# Determina el ambiente y carga el .env correspondiente
+app_env = os.getenv("APP_ENV", "local")
+load_dotenv(f"env/.env.{app_env}")
 
 class Settings:
     # App info
     APP_NAME: str = os.getenv("APP_NAME", "FastAPI App")
     APP_VERSION: str = os.getenv("APP_VERSION", "1.0.0")
     APP_DESCRIPTION: str = os.getenv("APP_DESCRIPTION", "")
-    APP_ENV: str = os.getenv("APP_ENV", "development")
+    APP_ENV: str = app_env
     APP_HOST: str = os.getenv("APP_HOST", "127.0.0.1")
     APP_PORT: int = int(os.getenv("APP_PORT", 8000))
 

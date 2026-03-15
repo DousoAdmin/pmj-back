@@ -1,12 +1,15 @@
 # Raíz
-.env
-.env.*
+# (Ya no ignoramos .env aquí, usamos env/)
 
 # Ignora env reales
-env/*.env
-!env/dev.env
+env/.env.dev
+env/.env.prod
 !env/*.example
 dev.db
+
+# Docker Compose para ambientes no locales
+docker-compose.dev.yml
+docker-compose.prod.yml
 
 # Python
 __pycache__/
