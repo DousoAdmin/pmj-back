@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from Schemas import user_schema
 from Config.database import get_db
 from Services import auth_service
@@ -9,7 +10,13 @@ from Core import security
 router = APIRouter(prefix="/auth", tags=["authentication"])
 @router.post("/register", response_model=user_schema.UserResponse)
 def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
-    new_user = auth_service.register_user(user, db)
+    try:
+        new_user = auth_service.register_user(user, db)
+    except SQLAlchemyError:
+        raise HTTPException(
+            status_code=503,
+            detail="No se pudo conectar a la base de datos. Revisa DB_USER, DB_PASSWORD y DB_NAME en env/.env.",
+        )
     if not new_user:
         raise HTTPException(status_code=400, detail="Usuario ya existe")
     return new_user
@@ -17,7 +24,13 @@ def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
 @router.post("/login", response_model=user_schema.TokenResponse)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # OAuth2PasswordRequestForm usa 'username' y 'password' en lugar de 'USER_username' y 'USER_password'
-    auth_user = auth_service.authenticate_user(form_data.username, form_data.password, db)
+    try:
+        auth_user = auth_service.authenticate_user(form_data.username, form_data.password, db)
+    except SQLAlchemyError:
+        raise HTTPException(
+            status_code=503,
+            detail="No se pudo conectar a la base de datos. Revisa DB_USER, DB_PASSWORD y DB_NAME en env/.env.",
+        )
     if not auth_user:
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
     

@@ -5,7 +5,9 @@ from dotenv import load_dotenv
 from Config.config import settings
 
 
-load_dotenv()  # Carga variables del archivo .env
+# Carga variables desde ambos archivos (compatibilidad con este proyecto)
+load_dotenv()  # .env
+load_dotenv(dotenv_path="env", override=True)  # env (si existe, pisa .env)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 

@@ -8,6 +8,7 @@ if str(ROOT) not in sys.path:
 
 from fastapi import FastAPI
 from Config.database import Base, engine
+from sqlalchemy.exc import SQLAlchemyError
 
 # 1) Importa TODOS los modelos (para que SQLAlchemy resuelva relaciones)
 from Models.users import (
@@ -17,10 +18,10 @@ from Models.users import (
 from Models.persons import (
     personsModel, userpersonalModel, beneficiarysModel, disabilitysModel,
     documentsModel, documentstatesModel, ethnicityModel, gendersModel,
-    personsdocumentModel, programsModel, sexualidentitysModel,
+    personsdocumentModel, programsModel, sexualidentitysModel, typedocumentspersonsModel,
     statepersondocumentModel
 )
-from Models.organizations import (
+from Models.Organizations import (
   approaches_model,organization_approaches_model,organization_document_model,organization_document_type_model,
   organization_observations_model,organization_statuses_model,organization_type_model,organizations_model
 )
@@ -36,11 +37,27 @@ from Models.organizations import (
 #from Models.organizations import organizationsModel
 #from Models.organizations import organizationTypeModel
 
-# 2) Crea tablas
-Base.metadata.create_all(bind=engine)
+# 2) Crea tablas (si la BD está disponible)
+try:
+    Base.metadata.create_all(bind=engine)
+except SQLAlchemyError as e:
+    # No detenemos el arranque completo: útil para validar app/rutas mientras se corrige la BD.
+    print(f"[db] Aviso: no se pudo inicializar la base de datos al arranque: {e}")
 
 # 3) App
 app = FastAPI(title="Plataforma Modular con FastAPI")
+
+@app.get("/", tags=["Root"])
+def root():
+    return {
+        "message": "Plataforma Modular con FastAPI",
+        "docs": "/docs",
+        "health": "/health"
+    }
+
+@app.get("/health", tags=["Root"])
+def health():
+    return {"status": "ok"}
 
 # 4) Descubrimiento recursivo de routers en Routers/ y subcarpetas
 import importlib

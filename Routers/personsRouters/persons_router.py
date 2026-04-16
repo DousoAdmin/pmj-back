@@ -46,7 +46,6 @@ def get_person_by_id(
 @router.get("/search/query", response_model=list[persosns_schema.personsResponse])
 def search_persons(
     name: Optional[str] = Query(None, description="Buscar por nombre"),
-    lastname: Optional[str] = Query(None, description="Buscar por apellido"),
     identification: Optional[str] = Query(None, description="Buscar por número de identificación"),
     email: Optional[str] = Query(None, description="Buscar por email"),
     phone: Optional[str] = Query(None, description="Buscar por teléfono"),
@@ -59,7 +58,6 @@ def search_persons(
         persons = persons_service.search_persons(
             db=db,
             name=name,
-            lastname=lastname,
             identification=identification,
             email=email,
             phone=phone,
