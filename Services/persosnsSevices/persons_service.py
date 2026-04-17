@@ -30,7 +30,6 @@ def get_person_by_email(db: Session, email: str):
 def search_persons(
     db: Session,
     name: Optional[str] = None,
-    lastname: Optional[str] = None,
     identification: Optional[str] = None,
     email: Optional[str] = None,
     phone: Optional[str] = None,
@@ -46,8 +45,6 @@ def search_persons(
     filters = []
     if name:
         filters.append(Persons.PRSN_name.ilike(f"%{name}%"))
-    if lastname:
-        filters.append(Persons.PRSN_lastname.ilike(f"%{lastname}%"))
     if identification:
         filters.append(Persons.PRSN_identification.ilike(f"%{identification}%"))
     if email:
@@ -79,7 +76,7 @@ def create_person(db: Session, person_data):
     person_dict = person_data.dict(exclude={'PRSN_state'} if not _has_state_column() else set())
     
     # Convertir valores 0 en claves foráneas a None (NULL) para evitar errores de foreign key
-    foreign_key_fields = ['PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity']
+    foreign_key_fields = ['PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity', 'PRSN_FK_typedocumentspersons']
     for field in foreign_key_fields:
         if field in person_dict and person_dict[field] == 0:
             person_dict[field] = None
@@ -99,7 +96,7 @@ def update_person(db: Session, person_id: int, person_data):
     update_data = person_data.dict(exclude_unset=True)
     
     # Convertir valores 0 en claves foráneas a None (NULL) para evitar errores de foreign key
-    foreign_key_fields = ['PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity']
+    foreign_key_fields = ['PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity', 'PRSN_FK_typedocumentspersons']
     for field in foreign_key_fields:
         if field in update_data and update_data[field] == 0:
             update_data[field] = None

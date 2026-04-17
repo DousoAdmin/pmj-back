@@ -4,7 +4,6 @@ from typing import Optional
 
 class PersonCreate(BaseModel):
     PRSN_name: str = Field(..., min_length=1, max_length=100)
-    PRSN_lastname: str = Field(..., min_length=1, max_length=100)
     PRSN_phone: str = Field(..., min_length=1, max_length=45)
     PRSN_email: EmailStr = Field(..., max_length=100)
     PRSN_brithday: date
@@ -14,6 +13,7 @@ class PersonCreate(BaseModel):
     PRSN_FK_disability: Optional[int] = Field(None, description="ID de discapacidad (debe ser mayor a 0 o None)")
     PRSN_FK_gender: Optional[int] = Field(None, description="ID de género (debe ser mayor a 0 o None)")
     PRSN_FK_sexualidentity: Optional[int] = Field(None, description="ID de identidad sexual (debe ser mayor a 0 o None)")
+    PRSN_FK_typedocumentspersons: Optional[int] = Field(None, description="ID de tipo de documento de persona")
     
     @field_validator('PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity', mode='before')
     @classmethod
@@ -29,7 +29,6 @@ class PersonCreate(BaseModel):
 
 class PersonUpdate(BaseModel):
     PRSN_name: Optional[str] = Field(None, min_length=1, max_length=100)
-    PRSN_lastname: Optional[str] = Field(None, min_length=1, max_length=100)
     PRSN_phone: Optional[str] = Field(None, min_length=1, max_length=45)
     PRSN_email: Optional[EmailStr] = Field(None, max_length=100)
     PRSN_brithday: Optional[date] = None
@@ -39,6 +38,7 @@ class PersonUpdate(BaseModel):
     PRSN_FK_disability: Optional[int] = Field(None, description="ID de discapacidad (debe ser mayor a 0 o None)")
     PRSN_FK_gender: Optional[int] = Field(None, description="ID de género (debe ser mayor a 0 o None)")
     PRSN_FK_sexualidentity: Optional[int] = Field(None, description="ID de identidad sexual (debe ser mayor a 0 o None)")
+    PRSN_FK_typedocumentspersons: Optional[int] = Field(None, description="ID de tipo de documento de persona")
     
     @field_validator('PRSN_FK_ethnicity', 'PRSN_FK_disability', 'PRSN_FK_gender', 'PRSN_FK_sexualidentity', mode='before')
     @classmethod
@@ -55,7 +55,6 @@ class PersonUpdate(BaseModel):
 class personsResponse(BaseModel):
     PRSN_PK: int
     PRSN_name: str
-    PRSN_lastname: str
     PRSN_phone: str
     PRSN_email: EmailStr
     PRSN_brithday: date
@@ -67,6 +66,7 @@ class personsResponse(BaseModel):
     PRSN_FK_disability: Optional[int]
     PRSN_FK_gender: Optional[int]
     PRSN_FK_sexualidentity: Optional[int]
+    PRSN_FK_typedocumentspersons: Optional[int]
     
     class Config:
         from_attributes = True

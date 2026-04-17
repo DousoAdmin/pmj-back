@@ -23,7 +23,7 @@ class OrganizationTypeResponse(BaseModel):
 
 
 class OrganizationTypeOut(BaseModel):
-    ORTP_PK = int
+    ORTP_PK : int
 
 
 class TokeResponse(BaseModel):
