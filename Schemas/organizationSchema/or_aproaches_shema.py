@@ -21,7 +21,7 @@ class AproachesOrganizationResponse(BaseModel):
     APCH_name : str
     APCH_description : str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class TokeResponse(BaseModel):

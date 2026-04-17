@@ -18,7 +18,7 @@ class UserResponse(BaseModel):
     USER_PK: int
     USER_username: str
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class UserOut(BaseModel):
     USER_FK_user_create : int 
@@ -30,7 +30,7 @@ class UserOut(BaseModel):
     USER_address_ip : str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TokenResponse(BaseModel):
     access_token: str
