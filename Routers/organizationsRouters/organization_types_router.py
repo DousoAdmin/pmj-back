@@ -44,7 +44,7 @@ def search_organization_types(
         organization_types = organization_types_service.search_organization_types(
             db=db,
             name=name
-        )
+        )   
         return organization_types
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en la búsqueda: {str(e)}")
