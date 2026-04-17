@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Models.Organizations.organization_observations_model import OrganizationObservations
+from Models.organizations.organization_observations_model import OrganizationObservations
 from Schemas.organizationSchema.organization_observations_shema import (
     OrganizationObsarvationCreate,
     OrganizationObservationUpdate,

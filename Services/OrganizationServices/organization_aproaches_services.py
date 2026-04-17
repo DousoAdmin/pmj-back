@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Models.Organizations.organization_approaches_model import OrganizationsApproaches
+from Models.organizations.organization_approaches_model import OrganizationsApproaches
 from Schemas.organizationSchema.organization_aproaches_shema import (
     OrganizationAproachesCreate,
     OrganizatioAprochesUpdate,
