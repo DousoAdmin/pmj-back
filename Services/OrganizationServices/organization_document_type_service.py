@@ -1,6 +1,6 @@
 
 from sqlalchemy.orm import Session
-from Models.Organizations.organization_document_type_model import OrganizationDocumentType
+from Models.organizations.organization_document_type_model import OrganizationDocumentType
 from Schemas.organizationSchema.organization_document_type_shema import (
     OrganizationDocumentTypeCreate,
     OrganizationDocumentTypeOut,
@@ -89,7 +89,7 @@ def delete_document_type(
 
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from Models.Organizations.organization_document_type_model import OrganizationDocumentType
+from Models.organizations.organization_document_type_model import OrganizationDocumentType
 from typing import Optional
 
 def get_all_organization_document_types(db: Session):

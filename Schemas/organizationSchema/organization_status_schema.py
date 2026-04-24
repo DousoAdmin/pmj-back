@@ -20,7 +20,7 @@ class OrganizationStatusResponse(BaseModel):
     ORST_description: str
     ORST_date_create: date = None
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizationStatusOut(BaseModel):
@@ -30,7 +30,7 @@ class OrganizationStatusOut(BaseModel):
     ORST_date_create: date = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TokenResponse(BaseModel):
     access_token: str

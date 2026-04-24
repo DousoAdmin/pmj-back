@@ -19,7 +19,7 @@ class OrganizationTypeResponse(BaseModel):
     ORTP_name : str
     ORTP_description : str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizationTypeOut(BaseModel):

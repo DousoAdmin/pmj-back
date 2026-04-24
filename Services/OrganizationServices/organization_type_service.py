@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Models.Organizations.organization_type_model import OrganizationTypes
+from Models.organizations.organization_type_model import OrganizationTypes
 from Schemas.organizationSchema.organization_type_shema import (
     OrganizationTypeCreate,
     OrganizationTypeUpdate,

@@ -16,7 +16,7 @@ class OrganizationDocumentResponse(BaseModel):
     ORDC_observation : str
     ORDC_user_create : date
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizationDocumentUpdate(BaseModel):

@@ -20,7 +20,7 @@ class OrganizationAproachesResponse(BaseModel):
     ORAP_FK_organization : int
     ORAP_FK_approach : int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizatioAproachesOut(BaseModel):

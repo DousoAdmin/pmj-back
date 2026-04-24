@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 class UserCreate(BaseModel):
-    USER_FK_user_create : int 
+    usuario_creador : int 
     USER_FK_user_update : int
     USER_username : str
     USER_password : str
@@ -17,7 +17,7 @@ class UserResponse(BaseModel):
     USER_PK: int
     USER_username: str
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class UserOut(BaseModel):
     USER_PK: int
@@ -27,7 +27,7 @@ class UserOut(BaseModel):
     
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TokenResponse(BaseModel):
     access_token: str
