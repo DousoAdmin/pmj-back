@@ -1,19 +1,18 @@
 # Configuración de Docker Compose para desarrollo
-# Uso: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+# Usa MySQL en XAMPP en localhost
+# Comando: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 
 version: '3.8'
 
 services:
   app:
-    # En desarrollo, usar volumen mount para hot-reload
+    # Hot reload en desarrollo
     volumes:
       - .:/app
     environment:
       APP_ENV: development
-    # Usar uvicorn con reload para desarrollo
+      # BD prueba en XAMPP sin contraseña
+      DATABASE_URL: mysql+pymysql://root@host.docker.internal:3306/prueba
+    
+    # Uvicorn con reload
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-
-  db:
-    # En desarrollo, exponer el puerto MySQL para debugging
-    ports:
-      - "3306:3306"

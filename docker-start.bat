@@ -1,33 +1,42 @@
 @echo off
-REM Script de inicio rápido para Docker en Windows
+REM Script para ejecutar Docker con MySQL en XAMPP
+REM Requiere que XAMPP MySQL esté corriendo
 
-echo 🐳 PMJ Backend - Docker Setup
-echo ==============================
+title PMJ Backend - Docker Development
+cls
 
-REM Verificar si Docker está instalado
+echo.
+echo ================================
+echo  PMJ Backend - Docker Development
+echo ================================
+echo.
+
+REM Verificar que Docker esté corriendo
 docker --version >nul 2>&1
 if errorlevel 1 (
-    echo ❌ Docker no está instalado. Por favor instálalo desde https://www.docker.com
+    echo ERROR: Docker no está instalado o no está corriendo
+    echo Abre Docker Desktop y vuelve a intentar
+    pause
     exit /b 1
 )
 
-REM Verificar si Docker Compose está instalado
-docker-compose --version >nul 2>&1
-if errorlevel 1 (
-    echo ❌ Docker Compose no está instalado.
-    exit /b 1
-)
+echo [1/3] Verificando que XAMPP MySQL esté disponible en puerto 3306...
+echo.
 
-echo ✓ Docker y Docker Compose detectados
+echo [2/3] Limpiando contenedores anteriores...
+docker-compose down --remove-orphans
 
-REM Crear .env si no existe
-if not exist .env (
-    echo 📝 Creando archivo .env...
-    copy .env.docker .env
-    echo ⚠️  Edita .env y configura las variables de entorno
-) else (
-    echo ✓ Archivo .env ya existe
-)
+echo.
+echo [3/3] Construyendo e iniciando servicios...
+echo.
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+
+echo.
+echo La aplicación debería estar disponible en: http://localhost:8000
+echo Documentación en: http://localhost:8000/docs
+echo.
+
+pause
 
 REM Construir y levantar servicios
 echo.

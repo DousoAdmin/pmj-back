@@ -1,17 +1,19 @@
 # Configuración de producción para Docker Compose
-# Uso: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+# Usa MySQL en XAMPP en localhost
+# Comando: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 
 version: '3.8'
 
 services:
   app:
-    # En producción NO usar reload
     command: gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
     
     environment:
       APP_ENV: production
+      # BD prueba en XAMPP sin contraseña
+      DATABASE_URL: mysql+pymysql://root@host.docker.internal:3306/prueba
     
-    # NO montar volúmenes en producción
+    # Sin volúmenes en producción
     volumes: []
     
     # Limitar recursos
@@ -30,13 +32,6 @@ services:
       delay: 5s
       max_attempts: 5
       window: 120s
-
-  db:
-    # NO exponer puerto en producción
-    ports: []
-    
-    environment:
-      MYSQL_INITDB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     
     # Limitar recursos
     deploy:
