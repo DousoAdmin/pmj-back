@@ -10,6 +10,20 @@ class UserCreate(BaseModel):
     USER_address_ip : str
 
 
+class UserRegister(BaseModel):
+    FULL_NAME: str
+    IDENTIFICATION: str
+    TYPE_DOCUMENT: int
+    BIRTHDAY: str
+    EMAIL: EmailStr
+    PHONE: str
+    LOCATION: str
+    ETNIA: int
+    DISCAPACIDAD: int
+    GENERO: int
+    IDENTIDAD_SEXUAL: int
+
+
 class UserLogin(BaseModel):
     USER_username: str
     USER_password: str
