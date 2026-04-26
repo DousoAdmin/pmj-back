@@ -1,3 +1,5 @@
+from datetime import date
+
 from pydantic import BaseModel, EmailStr
 
 class UserCreate(BaseModel):
@@ -14,8 +16,8 @@ class UserRegister(BaseModel):
     FULL_NAME: str
     IDENTIFICATION: str
     TYPE_DOCUMENT: int
-    BIRTHDAY: str
-    EMAIL: EmailStr
+    BIRTHDAY: date
+    EMAIL: str
     PHONE: str
     LOCATION: str
     ETNIA: int

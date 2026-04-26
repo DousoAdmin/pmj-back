@@ -13,7 +13,7 @@ def register_user(user: Schemas.user_schema.UserCreate, db: Session):
 
     hashed_password = security.hash_password(user.USER_password)
     new_user = userModel.User(
-        USER_FK_user_create = user.USER_FK_user_create,
+        USER_FK_user_create = user.usuario_creador,
         USER_FK_user_update = user.USER_FK_user_update,
         USER_username = user.USER_username,
         USER_password = hashed_password,
