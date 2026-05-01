@@ -25,3 +25,4 @@ class User(Base):
     userspersons = relationship("UserPersonas", back_populates="user")
     logs = relationship("Logs", back_populates="user")
     usersrolesorgani = relationship("UsersRolesOrganizations", back_populates="user")
+    # Relaciones de autorreferencia para creación y actualización    creator = relationship("User", remote_side=[USER_PK], foreign_keys=[USER_FK_user
