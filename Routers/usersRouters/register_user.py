@@ -38,12 +38,12 @@ def registrar_usuario(user: UserRegister, db: Session = Depends(get_db)):
             USER_FK_user_update=1,  # Aquí puedes asignar el ID del usuario que actualiza, si lo tienes
             USER_username=user.EMAIL,  # Usar el email como username
             USER_password="Colombia2026*",  # Aquí deberías hashear la contraseña real
-            USER_FK_state_user=1,  # Asumiendo que 1 es el estado activo
+            USER_FK_state_user=2,  # Asumiendo que 2 es el estado activo
             USER_reset_password=0,  # Asumiendo que no se requiere reset de contraseña
             USER_address_ip="127.0.0.1"
         )
         
-        new_user = register_user(db, data_user)
+        new_user = register_user(data_user,db)
       
                 
         return JSONResponse(
