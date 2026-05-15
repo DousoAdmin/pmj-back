@@ -13,7 +13,7 @@ class OrganizationResponse(BaseModel):
     ORGZ_PK: int
     ORGZ_name: str
     class Config:
-        orm_mode = True 
+        from_attributes = True
 
 
 #Update

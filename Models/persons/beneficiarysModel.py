@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Date, BINARY, ForeignKey
+from sqlalchemy import Column, Integer, Date, ForeignKey, BOOLEAN
 from Config.database import Base
 from sqlalchemy.orm import relationship
 
@@ -7,7 +7,7 @@ class Beneficiary(Base):
     __tablename__ = "beneficiary"
 
     BNFC_PK = Column(Integer, primary_key=True, index=True)
-    BNFC_state = Column(BINARY, index=True, nullable=False)
+    BNFC_state = Column(BOOLEAN, index=True, nullable=False)
     BNFC_date_start = Column(Date)
     BNFC_date_finish = Column(Date)
     

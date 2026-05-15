@@ -137,3 +137,29 @@ def include_all_routers(app: FastAPI, package_name: str = "Routers"):
 
 # 5) Incluir todos los routers recursivamente
 include_all_routers(app, "Routers")
+
+#--------------------------------------------------PARTE DEL ENDPOINT---------------------------------------------------------
+
+
+from fastapi.exceptions import RequestValidationError
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    errores = []
+
+    for err in exc.errors():
+        errores.append({
+            "campo": err["loc"][-1],
+            "mensaje": err["msg"]
+        })
+
+    return JSONResponse(
+        status_code=400,
+        content={
+            "status": 400,
+            "error": "Error de validación",
+            "detalle": errores
+        }
+    )

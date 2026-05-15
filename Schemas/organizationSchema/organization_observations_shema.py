@@ -19,7 +19,7 @@ class OrganizationObservationResponse(BaseModel):
     OROB_FK_document : int
     OROB_comment : str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizationObservationOut(BaseModel):

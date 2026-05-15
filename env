@@ -9,15 +9,10 @@ APP_HOST=127.0.0.1
 APP_PORT=8000
 
 # =======================
-# 🗄 BASE DE DATOS
+# 🗄 BASE DE DATOS - XAMPP LOCAL
 # =======================
-DB_ENGINE=mysql+pymysql
-DB_USER=root
-DB_PASSWORD=root
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=prueba1
-DATABASE_URL=${DB_ENGINE}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+# BD: prueba (sin contraseña, usuario root en XAMPP)
+DATABASE_URL=mysql+pymysql://root@localhost:3306/prueba
 
 # =======================
 # 🔐 SEGURIDAD
@@ -25,5 +20,3 @@ DATABASE_URL=${DB_ENGINE}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB
 SECRET_KEY=mi_super_secreto
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-

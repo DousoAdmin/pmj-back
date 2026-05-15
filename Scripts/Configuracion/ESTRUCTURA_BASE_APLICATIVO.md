@@ -1,7 +1,10 @@
-# 🏗️ Estructura Base del Aplicativo - PMJ Backend
+# 🏗️ Estructura Base del Aplicativo
 
-Documento descriptor de la estructura, configuración y componentes base de la aplicación PMJ Backend.
-Use este documento como **template** para crear aplicaciones similares.
+Documento descriptor de arquitectura de aplicación de backend modular.
+Use este documento como **reference** para crear aplicaciones similares.
+
+⚠️ **NOTA DE SEGURIDAD:** Este documento contiene arquitectura y patrones.
+Para información de producción, consultar documentación privada.
 
 ---
 
@@ -9,198 +12,136 @@ Use este documento como **template** para crear aplicaciones similares.
 
 | Aspecto | Detalle |
 |--------|---------|
-| **Nombre Aplicación** | Plataforma Modular para Justicia (PMJ) Backend |
-| **Framework** | FastAPI 0.116.1 |
-| **Lenguaje** | Python 3.11 |
-| **Base de Datos** | MySQL 8.0 |
-| **ORM** | SQLAlchemy 2.0.43 |
-| **Autenticación** | JWT (python-jose) |
-| **Servidor** | Uvicorn + Gunicorn (producción) |
-| **Containerización** | Docker + Docker Compose |
-| **Despliegue** | Docker, Kubernetes, Cloud (AWS/GCP) |
+| **Nombre Aplicación** | [CONFIGURAR] |
+| **Framework** | FastAPI |
+| **Lenguaje** | Python 3.11+ |
+| **Base de Datos** | [CONFIGURAR - SQL/NoSQL] |
+| **ORM** | [CONFIGURAR - SQLAlchemy/etc] |
+| **Autenticación** | JWT con tokens |
+| **Servidor** | ASGI (desarrollo) + WSGI (producción) |
+| **Containerización** | Docker + Orquestación |
+| **Despliegue** | Containerizado en nube |
 
 ---
 
 ## 🏛️ Arquitectura General
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                         Cliente (Frontend)                   │
-└────────────────────────┬────────────────────────────────────┘
-                         │ HTTP/HTTPS
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│                    Nginx (Reverse Proxy)                    │
-│              (Opcional - Producción)                         │
-├─────────────────────────────────────────────────────────────┤
-│ - SSL/TLS Termination                                       │
-│ - Load Balancing                                            │
-│ - Static Files                                              │
-│ - Security Headers                                          │
-└────────────────────────┬────────────────────────────────────┘
-                         │ HTTP
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│                  FastAPI Application                        │
-│                      (Uvicorn)                              │
-├─────────────────────────────────────────────────────────────┤
-│ ┌──────────────────────────────────────────────────────┐   │
-│ │             Routers & Endpoints                      │   │
-│ │  ├─ Auth Router       (/auth)                        │   │
-│ │  ├─ User Router       (/users)                       │   │
-│ │  ├─ Org Router        (/organizations)              │   │
-│ │  └─ Persons Router    (/persons)                    │   │
-│ └──────────────────────────────────────────────────────┘   │
-│ ┌──────────────────────────────────────────────────────┐   │
-│ │             Services (Business Logic)                │   │
-│ │  ├─ Auth Service                                     │   │
-│ │  ├─ User Service                                     │   │
-│ │  ├─ Organization Services                           │   │
-│ │  └─ Persons Services                                │   │
-│ └──────────────────────────────────────────────────────┘   │
-│ ┌──────────────────────────────────────────────────────┐   │
-│ │             Schemas (Validation)                     │   │
-│ │  └─ Pydantic Models                                  │   │
-│ └──────────────────────────────────────────────────────┘   │
-└────────────────────────┬────────────────────────────────────┘
-                         │ SQL
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│                  SQLAlchemy ORM                             │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  Models (declarative_base)                          │  │
-│  │  ├─ Users, Roles, Permissions                       │  │
-│  │  ├─ Organizations, Document Types                   │  │
-│  │  └─ Persons, Documents, Status                      │  │
-│  └──────────────────────────────────────────────────────┘  │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│                   MySQL Database                           │
-│  ├─ User Management                                        │
-│  ├─ Organization Data                                      │
-│  ├─ Person Information                                     │
-│  └─ Business Data                                          │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────┐
+│   Cliente / Consumidor                 │
+│   (Frontend / Mobile / API Client)     │
+└─────────────┬──────────────────────────┘
+              │ Request HTTPS
+              │
+┌─────────────▼──────────────────────────┐
+│   Capa de Proxy / Gateway              │
+│   (Opcional en producción)             │
+│   ✓ Terminación TLS/SSL                │
+│   ✓ Enrutamiento                       │
+│   ✓ Rate limiting                      │
+│   ✓ Caché de respuestas                │
+└─────────────┬──────────────────────────┘
+              │ Request HTTP
+              │
+┌─────────────▼──────────────────────────┐
+│   Capa de Aplicación Backend           │
+│   ┌────────────────────────────────┐   │
+│   │ Routers & Endpoints            │   │
+│   │  ✓ Autenticación/Autorización  │   │
+│   │  ✓ Recursos de negocio        │   │
+│   │  ✓ Operaciones CRUD            │   │
+│   └────────────────────────────────┘   │
+│   ┌────────────────────────────────┐   │
+│   │ Services (Lógica Negocio)      │   │
+│   │  ✓ Validaciones               │   │
+│   │  ✓ Reglas de negocio          │   │
+│   │  ✓ Orquestación               │   │
+│   └────────────────────────────────┘   │
+│   ┌────────────────────────────────┐   │
+│   │ Schemas/Validadores           │   │
+│   │  ✓ Validación entrada         │   │
+│   │  ✓ Serialización salida       │   │
+│   └────────────────────────────────┘   │
+└─────────────┬──────────────────────────┘
+              │ SQL Queries
+              │
+┌─────────────▼──────────────────────────┐
+│   Capa ORM (Object-Relational Mapper)  │
+│   ✓ Mapeo objeto-relacional            │
+│   ✓ Pool de conexiones                 │
+│   ✓ Transacciones seguras              │
+└─────────────┬──────────────────────────┘
+              │
+┌─────────────▼──────────────────────────┐
+│   Base de Datos (SQL Relacional)       │
+│   ✓ Almacenamiento persistente         │
+│   ✓ Integridad referencial             │
+│   ✓ Respaldos automáticos              │
+│   ✓ Recuperación ante fallos           │
+└────────────────────────────────────────┘
 ```
 
 ---
 
-## 📁 Estructura de Carpetas
+## 📁 Estructura de Carpetas Recomendada
 
 ```
-pmj-back/
+backend-app/
 │
 ├── 📄 main.py                          # Punto de entrada
-├── 📄 requirements.txt                 # Dependencias Python
-├── .env.docker                         # Template de variables
-├── 📄 README.md                        # Documentación principal
+├── 📄 requirements.txt                 # Dependencias
+├── .env.template                       # Plantilla configuración
+├── 📄 README.md                        # Documentación
 │
 ├── 🗂️ Config/                          # Configuración
 │   ├── __init__.py
-│   ├── config.py                       # Settings (dotenv)
-│   └── database.py                     # Conexión SQLAlchemy
+│   ├── config.py                       # Settings
+│   └── database.py                     # BD config
 │
 ├── 🗂️ Core/                            # Lógica central
 │   ├── __init__.py
-│   └── security.py                     # JWT, hashing, etc
+│   └── security.py                     # Seguridad
 │
-├── 🗂️ Models/                          # Modelos SQLAlchemy
-│   ├── users/                          # Modelos de usuarios
-│   │   ├── userModel.py
-│   │   ├── rolesModel.py
-│   │   ├── permissionsModel.py
-│   │   └── ...
-│   │
-│   ├── organizations/                 # Modelos de organizaciones
-│   │   ├── organizations_model.py
-│   │   ├── organization_type_model.py
-│   │   └── ...
-│   │
-│   └── persons/                        # Modelos de personas
-│       ├── personsModel.py
-│       ├── documentsModel.py
-│       └── ...
+├── 🗂️ Models/                          # Modelos ORM
+│   ├── __init__.py
+│   ├── [modulo_1]/
+│   │   ├── __init__.py
+│   │   └── [modelo_name.py]
+│   └── ...
 │
-├── 🗂️ Schemas/                         # Esquemas Pydantic
-│   ├── user_schema.py
-│   ├── userShemas/
-│   │   └── ...
-│   ├── organizationSchema/
-│   │   └── ...
-│   └── personsSchemas/
-│       └── ...
+├── 🗂️ Schemas/                         # Esquemas validación
+│   ├── __init__.py
+│   ├── [modulo_1]/
+│   │   ├── __init__.py
+│   │   └── [schema_name.py]
+│   └── ...
 │
-├── 🗂️ Routers/                         # Endpoints FastAPI
-│   ├── auth_router.py
-│   ├── user_router.py
-│   │
-│   ├── organizationsRouters/
-│   │   ├── organization_router.py
-│   │   ├── organization_type_router.py
-│   │   └── ...
-│   │
-│   ├── personsRouters/
-│   │   ├── persons_router.py
-│   │   ├── documents_router.py
-│   │   └── ...
-│   │
-│   └── usersRouters/
-│       └── user_router.py
+├── 🗂️ Routers/                         # Endpoints
+│   ├── __init__.py
+│   ├── [modulo_1]/
+│   │   ├── __init__.py
+│   │   └── [router_name.py]
+│   └── ...
 │
-├── 🗂️ Services/                        # Lógica de negocio
-│   ├── auth_service.py
-│   ├── user_service.py
-│   │
-│   ├── OrganizationServices/
-│   │   ├── organization_service.py
-│   │   ├── approaches_service.py
-│   │   └── ...
-│   │
-│   ├── personsServices/
-│   │   ├── persons_service.py
-│   │   ├── documents_service.py
-│   │   └── ...
-│   │
-│   └── userServices/
-│       └── ...
+├── 🗂️ Services/                        # Lógica negocio
+│   ├── __init__.py
+│   ├── [modulo_1]/
+│   │   ├── __init__.py
+│   │   └── [service_name.py]
+│   └── ...
 │
-├── 🗂️ Scripts/                         # Scripts y documentación
-│   ├── Documentacion/
-│   │   ├── Docker/
-│   │   │   ├── DOCKER_CONFIGS.md
-│   │   │   └── README.md
-│   │   │
-│   │   ├── Guias/
-│   │   │   ├── PROCEDIMIENTOS.md
-│   │   │   ├── TROUBLESHOOTING.md
-│   │   │   ├── OPERACIONES_DIARIAS.md
-│   │   │   └── BACKUP_Y_RECUPERACION.md
-│   │   │
-│   │   └── README.md
-│   │
-│   ├── Configuracion/
-│   │   ├── ESTRUCTURA_BASE_APLICATIVO.md (este archivo)
-│   │   └── TEMPLATE_CONFIGURACION.md
-│   │
-│   ├── docker-start.bat
-│   ├── docker-start.sh
-│   ├── docker-stop.bat
-│   └── docker-stop.sh
+├── 🗂️ Scripts/                         # Utilidades
+│   └── ...
 │
-├── 🐳 Docker
+├── 🐳 Docker/                          # Configuración
 │   ├── Dockerfile
 │   ├── docker-compose.yml
-│   ├── docker-compose.dev.yml
-│   ├── docker-compose.prod.yml
-│   ├── docker-compose.nginx.yml
 │   ├── .dockerignore
-│   └── nginx.conf
+│   └── ...
 │
-├── 🔧 CI/CD
-│   ├── .github/
-│   │   └── workflows/
-│   │       └── docker-ci-cd.yml
+└── 🔧 .github/workflows/               # CI/CD
+    └── [workflow_files.yml]
+```
 │   │
 │   └── .gitignore
 │
@@ -213,42 +154,41 @@ pmj-back/
 ## 🔌 Stack Tecnológico
 
 ### Backend
-```python
-# main.py
-- FastAPI 0.116.1          → Framework web
-- Uvicorn 0.35.0           → Servidor ASGI
-- Gunicorn 21.2.0          → WSGI HTTP Server (producción)
-- Pydantic 2.11.7          → Validación de datos
-- SQLAlchemy 2.0.43        → ORM para BD
-- PyMySQL 1.1.2            → Driver MySQL
+```
+- Framework web asincrónico moderno
+- Servidor ASGI para desarrollo
+- Servidor WSGI para producción
+- Validación de datos robusta
+- ORM para manejo de BD
+- Driver para BD relacional
 ```
 
 ### Autenticación & Seguridad
-```python
-- python-jose 3.5.0        → JWT tokens
-- passlib 1.7.4            → Hashing de contraseñas
-- bcrypt 4.3.0             → Algoritmo de hash
-- python-multipart 0.0.20  → Form parsing
+```
+- Tokens JWT para autenticación
+- Hash seguro de contraseñas (Bcrypt)
+- Validación de emails
+- Manejo seguro de variables sensibles
 ```
 
 ### Utilidades
-```python
-- python-dotenv 1.1.1      → Manejo de variables .env
-- Alembic 1.16.5           → Migraciones de BD (opcional)
-- email-validator 2.3.0    → Validación de email
-- Mako 1.3.10              → Template engine
+```
+- Gestor de variables de entorno
+- Migraciones de BD (opcional)
+- Validación de esquemas
+- Documentación automática
 ```
 
-### Database
+### Base de Datos
 ```
-- MySQL 8.0                → Base de datos relacional
+- Base de datos SQL relacional (configurar versión según necesidad)
 ```
 
 ### Containerización
 ```
-- Docker                   → Containerización
-- Docker Compose           → Orquestación multi-contenedor
-- Nginx                    → Reverse proxy (opcional)
+- Docker (containerización)
+- Orquestación de contenedores
+- Reverse proxy (opcional en producción)
 ```
 
 ---
@@ -256,28 +196,33 @@ pmj-back/
 ## 🔐 Seguridad
 
 ### Autenticación
-```python
-# Core/security.py
-- Hash de contraseñas: bcrypt (passlib)
-- Tokens JWT: python-jose (HS256)
-- Expiración de tokens: configurable
+
+```
+✓ Hash de contraseñas: algoritmo robusto (Bcrypt recomendado)
+✓ Tokens JWT con expiración configurable
+✓ Sin almacenamiento de passwords en texto plano
+✓ Validación en cada request protegido
+✓ Algo y llave de JWT en variables de entorno
 ```
 
 ### Base de Datos
-```python
-# Config/database.py
-- Engine: SQLAlchemy
-- URL: MySQL+PyMySQL
-- Pool de conexiones: automático
-- Echo (SQL logging): configurable
+
+```
+✓ ORM para prevenir inyección SQL
+✓ Pool de conexiones configurado
+✓ Credenciales en variables de entorno (NUNCA hardcodeadas)
+✓ Encriptación de datos sensibles (implementar según necesidad)
+✓ Backups automáticos en producción
 ```
 
 ### Validación
-```python
-# Schemas/
-- Modelos Pydantic
-- Validación de tipos
-- Restricciones de datos
+
+```
+✓ Validación de tipos en entrada
+✓ Esquemas estrictos de datos
+✓ Restricciones de datos
+✓ Sanitización de input
+✓ Rate limiting en API
 ```
 
 ---
@@ -286,296 +231,197 @@ pmj-back/
 
 ### 1. Inicio de Aplicación
 
-```python
-# main.py
-1. Carga variables de .env (Config.py)
-2. Importa todos los modelos (para relaciones SQLAlchemy)
-3. Crea tablas en BD (Base.metadata.create_all)
-4. Inicializa rutas (routers)
-5. Inicia servidor Uvicorn en puerto 8000
+```
+1. Cargar configuración desde variables de entorno
+2. Validar que DB estén disponibles
+3. Crear estructura de datos (migraciones o create_all)
+4. Registrar todas las rutas/endpoints
+5. Iniciar servidor web
+6. Verificar health check
 ```
 
-### 2. Request Lifecycle
+### 2. Ciclo de Request - Response
 
 ```
 Cliente HTTP Request
         ↓
-   Nginx (si existe)
+Router (enrutamiento)
         ↓
-   Uvicorn Router
+Validación de Schema (entrada)
         ↓
-   Endpoint (FastAPI)
+Service (lógica de negocio)
         ↓
-   Validación (Pydantic Schema)
+ORM (acceso a datos)
         ↓
-   Service (Lógica de negocio)
+Base de Datos (persistencia)
         ↓
-   Repository (Model + SQLAlchemy)
-        ↓
-   MySQL Query
-        ↓
-   Response JSON
+Response (serialización salida)
 ```
 
-### 3. Autenticación
+### 3. Flujo de Autenticación
 
 ```
-1. POST /auth/login
-2. Verificar usuario + contraseña
-3. Generar JWT token
-4. Retornar token
+1. POST /auth/[ENDPOINT]
+2. Validar credenciales de usuario
+3. Generar token JWT
+4. Retornar token al cliente
 
-5. Subsecuentes requests
+5. Requests posteriores
 6. Header: Authorization: Bearer <token>
 7. Validar token (Core/security.py)
-8. Obtener usuario actual
-9. Proceder si es válido
+8. Extraer identidad del usuario
+9. Proceder si token es válido
 ```
 
 ---
 
-## 🗄️ Modelo de Base de Datos Base
+## 🗄️ Modelo de Datos Base
 
-### Tablas Principales
+### Estructura Recomendada
 
-```sql
--- Users
-CREATE TABLE users (
-    user_id INT PRIMARY KEY,
-    username VARCHAR(100) UNIQUE,
-    email VARCHAR(100) UNIQUE,
-    password_hash VARCHAR(255),
-    state_id INT,
-    created_at TIMESTAMP
-);
+```
+Tablas principales:
+- Identidad (usuarios - hash de contraseña, NUNCA texto plano)
+- Autorización (roles, permisos)
+- Recursos principales del negocio
+- Auditoría (trazabilidad)
 
--- Roles
-CREATE TABLE roles (
-    role_id INT PRIMARY KEY,
-    role_name VARCHAR(100),
-    description TEXT
-);
+Relaciones:
+- N:M entre usuarios y roles
+- N:M entre roles y permisos
+- 1:N entre categorías y elementos
+```
 
--- Permissions
-CREATE TABLE permissions (
-    permissions_id INT PRIMARY KEY,
-    permissions_name VARCHAR(100),
-    description TEXT
-);
+### Campos Comunes en Todas las Tablas
 
--- Organizations
-CREATE TABLE organizations (
-    organization_id INT PRIMARY KEY,
-    organization_name VARCHAR(200),
-    organization_type_id INT,
-    created_at TIMESTAMP
-);
+```
+✓ ID único (primary key, auto-incremento)
+✓ created_at (timestamp)
+✓ updated_at (timestamp)
+✓ is_active (boolean, para soft-delete)
 
--- Persons
-CREATE TABLE persons (
-    person_id INT PRIMARY KEY,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    identity_document VARCHAR(50),
-    created_at TIMESTAMP
-);
-
--- Relaciones (N:M)
-CREATE TABLE users_roles_organizations (
-    user_id INT,
-    role_id INT,
-    organization_id INT,
-    PRIMARY KEY (user_id, role_id, organization_id)
-);
+IMPORTANTE:
+- NUNCA hardcodear ID's de datos
+- NUNCA incluir nombres específicos de negocio en templates
+- NUNCA almacenar contraseñas en texto plano
+- SIEMPRE usar hash para sensible (contraseñas, tokens)
 ```
 
 ---
 
 ## ⚙️ Configuración Base
 
-### Config.py
+### config.py
 
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-class Settings:
-    # App
-    APP_NAME = os.getenv("APP_NAME", "FastAPI App")
-    APP_ENV = os.getenv("APP_ENV", "development")
-    APP_PORT = int(os.getenv("APP_PORT", 8000))
-    
-    # Database
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    
-    # Security
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    ALGORITHM = os.getenv("ALGORITHM", "HS256")
-    ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
-
-settings = Settings()
+```
+✓ Usar clase Settings para validación
+✓ Cargar variables desde archivo .env
+✓ Defaults sensatos para desarrollo
+✓ Valores de producción SOLO desde variables de entorno
+✓ NUNCA hardcodear credenciales o secretos
+✓ Validar que variables requeridas están presentes al inicio
+✓ Sin contraseñas, API keys, o datos sensibles en el código
 ```
 
-### Database.py
+### database.py
 
-```python
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-from Config.config import settings
-
-engine = create_engine(
-    settings.DATABASE_URL,
-    echo=False,
-    pool_pre_ping=True
-)
-
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
-
-Base = declarative_base()
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+```
+✓ Crear engine con URL desde settings.DATABASE_URL
+✓ Configurar pool de conexiones
+✓ Crear SessionLocal factory
+✓ Base declarativa para modelos
+✓ Función get_db() como dependencia FastAPI
+✓ Manejo seguro de sesiones (always close en try/finally)
+✓ NUNCA hardcodear host, puerto, usuario o contraseña de BD
 ```
 
 ---
 
 ## 🔄 Patrones de Código
 
-### Modelo SQLAlchemy
+### Estructura de Modelo
 
-```python
-# Models/users/userModel.py
-from sqlalchemy import Column, Integer, String, DateTime
-from Config.database import Base
-from datetime import datetime
-
-class User(Base):
-    __tablename__ = "users"
-    
-    user_id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(100), unique=True, index=True)
-    email = Column(String(100), unique=True, index=True)
-    full_name = Column(String(100))
-    hashed_password = Column(String(255))
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+```
+1. Definir nombre de tabla
+2. Definir columnas con tipos y restricciones
+3. Definir relaciones a otros modelos
+4. Definir soft-delete si aplica (is_active)
+5. Incluir timestamps (created_at, updated_at)
+6. NUNCA usar datos hardcodeados
 ```
 
-### Schema Pydantic
+### Estructura de Schema (Validación)
 
-```python
-# Schemas/user_schema.py
-from pydantic import BaseModel, EmailStr
-from typing import Optional
-from datetime import datetime
-
-class UserBase(BaseModel):
-    username: str
-    email: EmailStr
-    full_name: Optional[str] = None
-
-class UserCreate(UserBase):
-    password: str
-
-class UserResponse(UserBase):
-    user_id: int
-    created_at: datetime
-    
-    class Config:
-        from_attributes = True
+```
+1. Heredar de BaseModel
+2. Definir campos con tipos correctos
+3. Agregar validadores si es necesario
+4. Separar: Create, Response, Update schemas
+5. NO exponer campos sensibles
+6. Usar field validators para reglas de negocio
 ```
 
-### Service
+### Estructura de Service
 
-```python
-# Services/user_service.py
-from sqlalchemy.orm import Session
-from Models.users.userModel import User
-
-def get_user_by_id(db: Session, user_id: int):
-    return db.query(User).filter(User.user_id == user_id).first()
-
-def create_user(db: Session, user_data):
-    user_dict = user_data.dict()
-    db_user = User(**user_dict)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+```
+1. Recibir Session de BD como parámetro
+2. Recibir datos pre-validados del Schema
+3. Realizar lógica de negocio
+4. Usar ORM para persistencia (no SQL directo)
+5. Manejo de errores y transacciones
+6. Retornar resultado
 ```
 
-### Router
+### Estructura de Router
 
-```python
-# Routers/user_router.py
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from Config.database import get_db
-from Services.user_service import get_user_by_id
-from Schemas.user_schema import UserResponse
-
-router = APIRouter(prefix="/users", tags=["Users"])
-
-@router.get("/{user_id}", response_model=UserResponse)
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = get_user_by_id(db, user_id)
-    return user
+```
+1. Definir prefix y tags
+2. Crear GET, POST, PUT, DELETE según necesidad
+3. Inyectar dependencias (DB, Usuario actual)
+4. Validar autorización/permisos
+5. Llamar service
+6. Retornar response serializado
+7. Documentar con docstrings
 ```
 
 ---
 
-## 🐳 Configuración Docker
+## 🐳 Configuración de Containerización
 
-### Dockerfile (Multi-stage)
+### Dockerfile
 
-```dockerfile
-FROM python:3.11-slim as builder
-# ... instalar dependencias
-
-FROM python:3.11-slim
-# ... runtime
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+✓ Usar imagen base oficial slim
+✓ Multi-stage build (builder + runtime)
+✓ Etapa builder: compilar dependencias
+✓ Etapa final: solo lo necesario
+✓ Exponer puerto en variable
+✓ User no-root por seguridad
+✓ Health check incluido
+✓ NUNCA incluir credenciales en imagen
 ```
 
 ### docker-compose.yml
 
-```yaml
-version: '3.8'
+```
+✓ Servicios claramente definidos
+✓ Variables de entorno desde .env
+✓ Recursos limitados
+✓ NO hardcodear passwords
+✓ Health checks en ambos servicios
+✓ Volúmenes para persistencia
+✓ Red isolada entre servicios
+✓ Logs configurados
+```
 
-services:
-  app:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: mysql+pymysql://user:pass@db:3306/pmj_db
-  
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: pmj_db
-    volumes:
-      - mysql_data:/var/lib/mysql
+### .env.template
 
-volumes:
-  mysql_data:
+```
+Incluir TODAS las variables necesarias con:
+✓ [SECTION] comments
+✓ Ejemplos de valores (NO credenciales reales)
+✓ Descripción de cada variable
+✓ Valores por defecto seguros
 ```
 
 ---
@@ -608,18 +454,18 @@ volumes:
 
 ## 🧪 Testing
 
-### Struktur Recomendada
+### Estructura Recomendada
 
 ```
 tests/
 ├── unit/
-│   ├── test_user_service.py
-│   ├── test_organization_service.py
+│   ├── test_services/
+│   │   └── test_[service_name].py
 │   └── ...
 │
 ├── integration/
-│   ├── test_user_routes.py
-│   ├── test_auth.py
+│   ├── test_routes/
+│   │   └── test_[route_name].py
 │   └── ...
 │
 ├── conftest.py
@@ -631,7 +477,7 @@ tests/
 ```bash
 pytest tests/
 pytest tests/ --cov=Services
-pytest tests/integration/test_auth.py -v
+pytest tests/integration/ -v
 ```
 
 ---
@@ -673,11 +519,23 @@ pytest tests/integration/test_auth.py -v
 
 ## ✨ Conclusión
 
-Este documento describe la estructura base y patrones de la aplicación PMJ Backend.
-Para crear aplicaciones similares:
+Este documento es un template arquitectónico para aplicaciones backend modulares.
 
-1. Seguir la misma estructura de directorios
-2. Adaptar modelos según necesidad
-3. Reutilizar patrones de código
-4. Usar template de Docker
-5. Consultar la documentación en `Scripts/Documentacion/`
+### Para crear aplicaciones similares:
+
+1. ✓ Seguir estructura de directorios recomendada
+2. ✓ Adaptar modelos según requisitos de negocio
+3. ✓ Reutilizar patrones de código
+4. ✓ Usar template de Docker
+5. ✓ NUNCA hardcodear datos sensibles
+6. ✓ Validar seguridad antes de producción
+7. ✓ Consultar documentación en `Scripts/Documentacion/`
+
+⚠️ **RECORDATORIO DE SEGURIDAD:**
+- Variables sensibles SIEMPRE en .env
+- Credenciales NUNCA en código fuente
+- Secrets en gestores dedicados (Vault, AWS Secrets, etc.)
+- Credenciales de BD NUNCA en documentación pública
+- No reutilizar credenciales de producción en desarrollo
+- Validar permisos y autorización en cada endpoint
+- Sanitizar entrada de usuario siempre

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Date, BINARY, ForeignKey
+from sqlalchemy import Column, String, Integer, Date, ForeignKey, BOOLEAN
 from Config.database import Base
 from sqlalchemy.orm import relationship
 
@@ -9,7 +9,7 @@ class Ethnicity(Base):
     ETNC_PK = Column(Integer, primary_key=True, unique=True)
     ETNC_name = Column(String(45), index=True, nullable=False)
     ETNC_description = Column(String(155), index=True)
-    ETNC_state = Column(BINARY)
+    ETNC_state = Column(BOOLEAN)
 
     #Relaciones
     person = relationship("Persons", back_populates="ethnicity")
