@@ -28,6 +28,12 @@ class OrganizationUpdate(BaseModel):
 
 class OrganizationOut(BaseModel):
     ORGZ_PK: int
+    ORGZ_name: str
+    ORGZ_descriptions: str
+    ORGZ_FK_type: int | None = None
+
+    class Config:
+        orm_mode = True
 
 
 class TokenResponse(BaseModel):

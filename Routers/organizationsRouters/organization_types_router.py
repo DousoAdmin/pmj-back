@@ -12,7 +12,6 @@ router = APIRouter(prefix="/organization-types", tags=["organization-types"])
 @router.get("/", response_model=list[OrganizationTypeResponse])
 def get_all_organization_types(
     db: Session = Depends(get_db),
-    current_user: UserResponse = Depends(get_current_user)
 ):
     """Obtiene todos los tipos de organización."""
     try:

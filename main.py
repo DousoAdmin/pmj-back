@@ -7,6 +7,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from Config.database import Base, engine
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -46,6 +47,17 @@ except SQLAlchemyError as e:
 
 # 3) App
 app = FastAPI(title="Plataforma Modular con FastAPI")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/", tags=["Root"])
 def root():

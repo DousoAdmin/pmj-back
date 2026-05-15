@@ -34,7 +34,6 @@ def get_organization_by_id(
 def create_organization(
     data: OrganizationCreate,
     db: Session = Depends(get_db),
-    current_user: OrganizationResponse = Depends(get_current_user),
 ):
     return organization_service.create_organization(db, data)
 
