@@ -9,6 +9,16 @@ from typing import Optional
 
 router = APIRouter(prefix="/disabilitys", tags=["disabilitys"])
 
+def to_response(d) -> Optional[DisabilityResponse]:
+    if not d:
+        return None
+    return DisabilityResponse(
+        id=d.DSBT_PY,
+        nombre=d.DSBT_name,
+        descripcion=d.DSBT_description,
+        estado=d.DSBT_state
+    )
+
 @router.get("/", response_model=list[DisabilityResponse])
 def get_all_disabilitys(
     db: Session = Depends(get_db),
@@ -18,7 +28,7 @@ def get_all_disabilitys(
     """Obtiene todas las discapacidades activas (o todas si include_inactive=True)."""
     try:
         disabilitys = disabilitys_service.get_all_disabilitys(db, include_inactive=include_inactive)
-        return disabilitys
+        return [to_response(d) for d in disabilitys]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener discapacidades: {str(e)}")
 
@@ -32,7 +42,7 @@ def get_disability_by_id(
     disability = disabilitys_service.get_disability_by_id(db, disability_id)
     if not disability:
         raise HTTPException(status_code=404, detail="Discapacidad no encontrada")
-    return disability
+    return to_response(disability)
 
 @router.get("/search/query", response_model=list[DisabilityResponse])
 def search_disabilitys(
@@ -48,7 +58,7 @@ def search_disabilitys(
             name=name,
             include_inactive=include_inactive
         )
-        return disabilitys
+        return [to_response(d) for d in disabilitys]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en la búsqueda: {str(e)}")
 
@@ -61,7 +71,7 @@ def create_disability(
     """Crea una nueva discapacidad."""
     try:
         new_disability = disabilitys_service.create_disability(db, disability_data)
-        return new_disability
+        return to_response(new_disability)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
@@ -79,7 +89,7 @@ def update_disability(
         updated_disability = disabilitys_service.update_disability(db, disability_id, disability_data)
         if not updated_disability:
             raise HTTPException(status_code=404, detail="Discapacidad no encontrada")
-        return updated_disability
+        return to_response(updated_disability)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
@@ -111,7 +121,7 @@ def deactivate_disability(
         deactivated_disability = disabilitys_service.deactivate_disability(db, disability_id)
         if not deactivated_disability:
             raise HTTPException(status_code=404, detail="Discapacidad no encontrada")
-        return deactivated_disability
+        return to_response(deactivated_disability)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
@@ -128,7 +138,7 @@ def activate_disability(
         activated_disability = disabilitys_service.activate_disability(db, disability_id)
         if not activated_disability:
             raise HTTPException(status_code=404, detail="Discapacidad no encontrada")
-        return activated_disability
+        return to_response(activated_disability)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:

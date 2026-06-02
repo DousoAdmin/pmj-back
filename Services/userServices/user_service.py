@@ -12,12 +12,12 @@ def get_users(db: Session):
 
 # Obtener por ID
 def get_user(db: Session, user_id: int):
-    return db.get(Models.userModel.users, user_id)
+    return db.get(Models.users.userModel.User, user_id)
 
 
 # Crear usuario
 def create_user(db: Session, user: user_schema):
-    new_user = Models.userModel.users(**user.dict())
+    new_user = Models.users.userModel.User(**user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -26,7 +26,7 @@ def create_user(db: Session, user: user_schema):
 
 # Actualizar usuario
 def update_user(db: Session, user_id: int, data: user_schema):
-    db_user = db.get(Models.userModel.users, user_id)
+    db_user = db.get(Models.users.userModel.User, user_id)
     if not db_user:
         return None
 
@@ -42,7 +42,7 @@ def update_user(db: Session, user_id: int, data: user_schema):
 
 # Eliminar usuario
 def delete_user(db: Session, user_id: int):
-    db_user = db.get(Models.userModel.users, user_id)
+    db_user = db.get(Models.users.userModel.User, user_id)
     if not db_user:
         return None
 

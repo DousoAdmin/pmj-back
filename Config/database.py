@@ -7,7 +7,8 @@ from Config.config import settings
 
 # Carga variables desde ambos archivos (compatibilidad con este proyecto)
 load_dotenv()  # .env
-load_dotenv(dotenv_path="env", override=True)  # env (si existe, pisa .env)
+if not os.path.exists("/.dockerenv"):
+    load_dotenv(dotenv_path="env", override=True)  # env (si existe, pisa .env)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 

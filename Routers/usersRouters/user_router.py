@@ -21,7 +21,7 @@ def list_users(db: Session = Depends(get_db)):
 #Traer por id
 @router.get("/{user_id}", response_model=UserOut)
 def get_user(user_id: int, db: Session = Depends(get_db), current_user: UserResponse = Depends(get_current_user)):
-    user = user.get_user(db, user_id)
+    user = user_service.get_user(db, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return user
@@ -29,7 +29,7 @@ def get_user(user_id: int, db: Session = Depends(get_db), current_user: UserResp
 #Crear
 @router.post("/", response_model=UserOut)
 def create(user: UserCreate, db: Session = Depends(get_db), current_user: UserResponse = Depends(get_current_user)):
-    return user.create_user(db, user)
+    return user_service.create_user(db, user)
 
 #Actualizar
 @router.put("/{user_id}", response_model=UserOut)

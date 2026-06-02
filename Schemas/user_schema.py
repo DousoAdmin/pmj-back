@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 class UserCreate(BaseModel):
-    usuario_creador : int 
+    USER_FK_user_create : int 
     USER_FK_user_update : int
     USER_username : str
     USER_password : str

@@ -11,11 +11,12 @@ class DisabilityUpdate(BaseModel):
     DSBT_description: Optional[str] = Field(None, max_length=150)
     DSBT_state: Optional[bool] = None
 
+
 class DisabilityResponse(BaseModel):
-    DSBT_PY: int
-    DSBT_name: Optional[str]
-    DSBT_description: Optional[str]
-    DSBT_state: Optional[bool]
+    id: int
+    nombre: Optional[str]
+    descripcion: Optional[str]
+    estado: Optional[bool]
     
     class Config:
         from_attributes = True
