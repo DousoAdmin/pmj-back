@@ -1,6 +1,6 @@
 # PMJ Backend
 
-Backend de la Plataforma Modular para Justicia (PMJ) construida con FastAPI.
+Backend de la Plataforma Modular (PMJ) construida con FastAPI.
 
 ## 🚀 Inicio Rápido con Docker
 
