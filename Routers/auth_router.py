@@ -14,7 +14,7 @@ def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
         new_user = auth_service.register_user(user, db)
     except SQLAlchemyError:
         raise HTTPException(
-            status_code=503,
+            status_code=503, 
             detail="No se pudo conectar a la base de datos. Revisa DB_USER, DB_PASSWORD y DB_NAME en env/.env.",
         )
     if not new_user:
