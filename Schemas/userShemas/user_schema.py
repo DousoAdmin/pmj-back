@@ -13,17 +13,18 @@ class UserCreate(BaseModel):
 
 
 class UserRegister(BaseModel):
-    FULL_NAME: str
-    IDENTIFICATION: str
-    TYPE_DOCUMENT: int
-    BIRTHDAY: date
-    EMAIL: str
-    PHONE: str
-    LOCATION: str
-    ETNIA: int
-    DISCAPACIDAD: int
-    GENERO: int
-    IDENTIDAD_SEXUAL: int
+    full_name: str
+    identification: str
+    type_document: int
+    birthday: date
+    email: str
+    phone: str
+    location: str
+    etnia: int
+    discapacidad: int
+    genero: int
+    identidad_sexual: int
+    password: str
 
 
 class UserLogin(BaseModel):
