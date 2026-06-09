@@ -28,12 +28,12 @@ class UserRegister(BaseModel):
 
 
 class UserLogin(BaseModel):
-    USER_username: str
-    USER_password: str
+    username: str
+    password: str
 
 class UserResponse(BaseModel):
-    USER_PK: int
-    USER_username: str
+    id: int
+    username: str
     class Config:
         from_attributes = True
         

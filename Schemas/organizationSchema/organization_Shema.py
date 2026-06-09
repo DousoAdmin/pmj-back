@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class OrganizationCreate(BaseModel):
@@ -34,6 +35,21 @@ class OrganizationOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class OrganizationSimple(BaseModel):
+    id_organizacion: int
+    nombre: str
+    descripcion: Optional[str] = None
+    nit: Optional[str] = None
+    fecha_creacion: Optional[str] = None
+    id_estado: Optional[int] = None
+    nombre_estado: Optional[str] = None
+    id_tipo: Optional[int] = None
+    nombre_tipo: Optional[str] = None
+
+    class Config:
+        from_attributes = True
 
 
 class TokenResponse(BaseModel):
